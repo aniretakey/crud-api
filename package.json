@@ -4,7 +4,7 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start:dev": "nodemon src/main.js",
+    "start:dev": "nodemon src/main.ts",
     "start:prod": "tsx build/index.ts",
     "build": "esbuild src/main.ts --bundle --platform=node --target=node24 --outfile=dist/main.js --format=esm",
     "lint": "eslint \"src/**/*.ts\"",

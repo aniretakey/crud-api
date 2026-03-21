@@ -1,6 +1,6 @@
 import { randomUUID } from 'crypto';
 import { products } from '../db/products.js';
-import { Product } from '../types/types.js';
+import { NewProduct, Product } from '../types/types.js';
 
 export const findAllProducts = async () => {
   return products;
@@ -10,7 +10,7 @@ export const findProductById = async (id: string) => {
   return products.find(el => el.id === id);
 };
 
-export const addProduct = async (product: Omit<Product, 'id'>) => {
+export const addProduct = async (product: NewProduct) => {
   const id = randomUUID();
 
   const newProduct = {

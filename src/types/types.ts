@@ -6,3 +6,5 @@ export type Product = {
   category: string;
   inStock: boolean;
 }
+
+export type NewProduct = Omit<Product, 'id'>

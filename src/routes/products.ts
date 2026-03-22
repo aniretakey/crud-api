@@ -1,5 +1,12 @@
 import { FastifyInstance } from 'fastify';
-import { addProduct, deleteProduct, findAllProducts, findProductById, isProductExists } from '../utils/utils.ts';
+import {
+  addProduct,
+  deleteProduct,
+  findAllProducts,
+  findProductById,
+  isProductExists,
+  updateProduct,
+} from '../utils/utils.ts';
 import { AddProductRequest, GetProductByIdRequest, UpdateProductRequest } from '../types/request.types.ts';
 import { isValidUuid, validateProductFields } from '../utils/helpers.ts';
 
@@ -45,7 +52,22 @@ async function productsRoutes(fastify: FastifyInstance) {
   });
 
   fastify.put('/:id', async (request: UpdateProductRequest, reply) => {
-    return reply.code(200).send(`Product with id ${request.params.id} successfully updated`);
+    const idFromReq = request.params.id;
+
+    if (!isValidUuid(idFromReq)) {
+      return reply.code(400).send(`Product id ${idFromReq} is not valid uuid`);
+    }
+
+    const product = await findProductById(idFromReq);
+
+    if (!product) {
+      return reply.code(404).send(`Product with id ${idFromReq} not found`);
+    }
+
+    const newProductFromParams = request.body;
+    const updatedProduct = await updateProduct(newProductFromParams, idFromReq);
+
+    return reply.code(200).send(`Product with id ${request.params.id} successfully updated: ${JSON.stringify(updatedProduct)}`);
   });
 
   fastify.delete('/:id', async (request: GetProductByIdRequest, reply) => {

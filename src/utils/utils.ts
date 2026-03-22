@@ -38,8 +38,8 @@ export const deleteProduct = async (id: string) => {
   return true;
 };
 
-export const updateProduct = async (product: Product) => {
-  const index = products.findIndex(p => p.id === product.id);
+export const updateProduct = async (product: NewProduct, productId: string) => {
+  const index = products.findIndex(p => p.id === productId);
 
   if (index === -1) {
     return null;

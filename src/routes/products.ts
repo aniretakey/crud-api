@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify';
 import { addProduct, findAllProducts, findProductById } from '../utils/utils.js';
-import { GetProductByIdRequest } from '../types/request.types.js';
+import { AddProductRequest, GetProductByIdRequest } from '../types/request.types.js';
 import { isValidUuid } from '../utils/helpers.js';
 
 async function productsRoutes(fastify: FastifyInstance) {
@@ -26,8 +26,11 @@ async function productsRoutes(fastify: FastifyInstance) {
     return reply.code(200).send(product);
   });
 
-  fastify.post('/', async (request, reply) => {
+  fastify.post('/', async (request: AddProductRequest, reply) => {
     const newProduct = addProduct(request.body);
+
+    //TODO: add validation
+    return reply.code(201).send(newProduct);
   });
 }
 

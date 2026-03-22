@@ -8,3 +8,9 @@ export type GetProductByIdRequest = FastifyRequest<{
 }>;
 
 export type AddProductRequest = FastifyRequest<{ Body: NewProduct }>
+
+export type UpdateProductRequest = FastifyRequest<{
+  Body: NewProduct, Params: {
+    id: string;
+  };
+}>

@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
 import { addProduct, deleteProduct, findAllProducts, findProductById, isProductExists } from '../utils/utils.ts';
 import { AddProductRequest, GetProductByIdRequest } from '../types/request.types.ts';
-import { isValidUuid } from '../utils/helpers.ts';
+import { isValidUuid, validateProductFields } from '../utils/helpers.ts';
 
 async function productsRoutes(fastify: FastifyInstance) {
   fastify.get('/', async (_, reply) => {
@@ -27,9 +27,20 @@ async function productsRoutes(fastify: FastifyInstance) {
   });
 
   fastify.post('/', async (request: AddProductRequest, reply) => {
-    const newProduct = addProduct(request.body);
+    const newProductFromParams = request.body;
 
-    //TODO: add validation
+    const { isValid, errorType } = validateProductFields(newProductFromParams);
+
+    if (!isValid) {
+      const errorMessage = errorType === 'INVALID_PRICE'
+        ? 'Price is not a positive number' :
+        `New product doesn't contain required fields`;
+
+      return reply.code(400).send(errorMessage);
+    }
+
+    const newProduct = await addProduct(newProductFromParams);
+
     return reply.code(201).send(newProduct);
   });
 

@@ -1,6 +1,6 @@
 import { randomUUID } from 'crypto';
-import { products } from '../db/products.js';
-import { NewProduct, Product } from '../types/types.js';
+import { products } from '../db/database.ts';
+import { NewProduct, Product } from '../types/types.ts';
 
 export const findAllProducts = async () => {
   return products;

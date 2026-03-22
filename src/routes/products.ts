@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
-import { addProduct, deleteProduct, findAllProducts, findProductById, isProductExists } from '../utils/utils.js';
-import { AddProductRequest, GetProductByIdRequest } from '../types/request.types.js';
-import { isValidUuid } from '../utils/helpers.js';
+import { addProduct, deleteProduct, findAllProducts, findProductById, isProductExists } from '../utils/utils.ts';
+import { AddProductRequest, GetProductByIdRequest } from '../types/request.types.ts';
+import { isValidUuid } from '../utils/helpers.ts';
 
 async function productsRoutes(fastify: FastifyInstance) {
   fastify.get('/', async (_, reply) => {

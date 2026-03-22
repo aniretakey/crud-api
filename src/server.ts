@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import Fastify from 'fastify';
-import productsRoutes from './routes/products.js';
+import productsRoutes from './routes/products.ts';
 
 const port = Number(process.env.PORT || 4000);
 

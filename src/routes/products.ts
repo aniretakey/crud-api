@@ -1,5 +1,5 @@
 import { FastifyInstance } from 'fastify';
-import { addProduct, findAllProducts, findProductById } from '../utils/utils.js';
+import { addProduct, deleteProduct, findAllProducts, findProductById, isProductExists } from '../utils/utils.js';
 import { AddProductRequest, GetProductByIdRequest } from '../types/request.types.js';
 import { isValidUuid } from '../utils/helpers.js';
 
@@ -14,7 +14,7 @@ async function productsRoutes(fastify: FastifyInstance) {
     const idFromReq = request.params.id;
 
     if (!isValidUuid(idFromReq)) {
-      return reply.code(400).send('Product id is not valid uuid');
+      return reply.code(400).send(`Product id ${idFromReq} is not valid uuid`);
     }
 
     const product = await findProductById(idFromReq);
@@ -31,6 +31,22 @@ async function productsRoutes(fastify: FastifyInstance) {
 
     //TODO: add validation
     return reply.code(201).send(newProduct);
+  });
+
+  fastify.delete('/:id', async (request: GetProductByIdRequest, reply) => {
+    const idFromReq = request.params.id;
+
+    if (!isValidUuid(idFromReq)) {
+      return reply.code(400).send(`Product id ${idFromReq} is not valid uuid`);
+    }
+
+    if (!isProductExists(idFromReq)) {
+      return reply.code(404).send(`Product with id ${idFromReq} doesn't exist`);
+    }
+
+    await deleteProduct(idFromReq);
+
+    return reply.code(204).send('Product successfully deleted');
   });
 }
 

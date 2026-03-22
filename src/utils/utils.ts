@@ -23,6 +23,10 @@ export const addProduct = async (product: NewProduct) => {
   return newProduct;
 };
 
+export const isProductExists = (id: string) => {
+  return products.some(el => el.id === id);
+};
+
 export const deleteProduct = async (id: string) => {
   const index = products.findIndex(el => el.id === id);
 

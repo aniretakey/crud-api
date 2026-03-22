@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "start:dev": "tsx watch src/main.ts",
-    "start:prod": "tsx build/index.ts",
-    "build": "esbuild src/main.ts --bundle --platform=node --target=node24 --outfile=dist/main.js --format=esm",
+    "start:prod": "npm run build && node dist/main.js",
+    "build": "esbuild src/main.ts --bundle --platform=node --target=node20 --outfile=dist/main.js --format=esm --external:fastify --external:dotenv --external:uuid",
     "lint": "eslint \"src/**/*.ts\"",
     "lint:fix": "eslint \"src/**/*.ts\" --fix",
     "format": "prettier --write \"src/**/*.{ts,md}\"",

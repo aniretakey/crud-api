@@ -140,3 +140,6 @@ vite.config.ts.timestamp-*
 
 # WebStorm / JetBrains IDEs
 .idea/
+
+# tests
+.tap

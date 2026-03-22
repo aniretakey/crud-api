@@ -1,0 +1,56 @@
+import { randomUUID } from 'crypto';
+import { products } from '../db/database.ts';
+import { NewProduct, Product } from '../types/types.ts';
+
+export const findAllProducts = async () => {
+  return products;
+};
+
+export const findProductById = async (id: string) => {
+  return products.find(el => el.id === id);
+};
+
+export const addProduct = async (product: NewProduct) => {
+  const id = randomUUID();
+
+  const newProduct = {
+    id: id,
+    ...product,
+  };
+
+  products.push(newProduct);
+
+  return newProduct;
+};
+
+export const isProductExists = (id: string) => {
+  return products.some(el => el.id === id);
+};
+
+export const deleteProduct = async (id: string) => {
+  const index = products.findIndex(el => el.id === id);
+
+  if (index === -1) {
+    return false;
+  }
+  products.splice(index, 1);
+
+  return true;
+};
+
+export const updateProduct = async (product: NewProduct, productId: string) => {
+  const index = products.findIndex(p => p.id === productId);
+
+  if (index === -1) {
+    return null;
+  }
+
+  const updatedProduct: Product = {
+    ...products[index],
+    ...product,
+  };
+
+  products[index] = updatedProduct;
+
+  return updatedProduct;
+};

@@ -3,9 +3,37 @@
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
+  "type": "module",
   "scripts": {
-    "start": "node src/main.js"
+    "start:dev": "tsx watch src/main.ts",
+    "start:prod": "npm run build && node dist/main.js",
+    "build": "esbuild src/main.ts --bundle --platform=node --target=node20 --outfile=dist/main.js --format=esm --external:fastify --external:dotenv --external:uuid",
+    "lint": "eslint \"src/**/*.ts\"",
+    "lint:fix": "eslint \"src/**/*.ts\" --fix",
+    "format": "prettier --write \"src/**/*.{ts,md}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,md}\"",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run format:check && npm run lint && npm run typecheck",
+    "test": "tap src/tests/*.test.ts"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "17.3.1",
+    "fastify": "5.8.2",
+    "uuid": "13.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.7.4",
+    "@typescript-eslint/eslint-plugin": "8.8.0",
+    "@typescript-eslint/parser": "8.8.0",
+    "cross-env": "7.0.3",
+    "esbuild": "0.27.4",
+    "eslint": "9.11.1",
+    "nodemon": "3.1.4",
+    "prettier": "3.3.3",
+    "tap": "21.6.2",
+    "tsx": "4.21.0",
+    "typescript": "5.6.2"
+  }
 }

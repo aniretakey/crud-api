@@ -67,7 +67,7 @@ async function productsRoutes(fastify: FastifyInstance) {
     const newProductFromParams = request.body;
     const updatedProduct = await updateProduct(newProductFromParams, idFromReq);
 
-    return reply.code(200).send(`Product with id ${request.params.id} successfully updated: ${JSON.stringify(updatedProduct)}`);
+    return reply.code(200).send(updatedProduct);
   });
 
   fastify.delete('/:id', async (request: GetProductByIdRequest, reply) => {

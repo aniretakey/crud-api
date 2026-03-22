@@ -4,7 +4,7 @@ import { AddProductRequest, GetProductByIdRequest } from '../types/request.types
 import { isValidUuid } from '../utils/helpers.js';
 
 async function productsRoutes(fastify: FastifyInstance) {
-  fastify.get('/', async (request, reply) => {
+  fastify.get('/', async (_, reply) => {
     const products = await findAllProducts();
 
     return reply.code(200).send(products);
